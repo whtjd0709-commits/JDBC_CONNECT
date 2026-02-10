@@ -15,7 +15,7 @@ public class RepositoryOrdersTest {
         OrdersVO order = OrdersVO.builder()
             .orderList("볶음밥")
             .price(10000)
-            .ordernum(1)
+            .orderNum(1)
             .userId("testuser")
             .build();
 

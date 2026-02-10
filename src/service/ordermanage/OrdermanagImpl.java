@@ -24,9 +24,9 @@ public class OrdermanagImpl implements Ordermanage {
     public boolean createOrder(OrderDTO order, UserDTO userDTO) {
         // 주문 생성
         OrdersVO newOrder = OrdersVO.builder()
-                .orderList(order.getOrderList())
-                .orderNum(order.getOrderNum())
-                .price(order.getPrice())
+            .orderList(order.getOrderList())
+            .orderNum(order.getOrderNum())
+            .price(order.getPrice())
                 .userId(userDTO.getUserId())
                 .build();
 
@@ -60,13 +60,13 @@ public class OrdermanagImpl implements Ordermanage {
         SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         for (OrdersVO vo : ordersVOList) {
             ordersList.add(OrderDTO.builder()
-                    .id(vo.getId())
-                    .orderList(vo.getOrderList())
-                    .orderNum(vo.getOrderNum())
-                    .price(vo.getPrice())
-                    .date(sf.format(vo.getDate()))
-                    .userId(vo.getUserId()) 
-                    .build());
+                .id(vo.getId())
+                .orderList(vo.getOrderList())
+                .orderNum(vo.getOrderNum())
+                .price(vo.getPrice())
+                .date(sf.format(vo.getDate()))
+                .userId(vo.getUserId())
+                .build());
         }
         return ordersList;
     }
@@ -96,7 +96,7 @@ public class OrdermanagImpl implements Ordermanage {
 
         if (user.isPresent()) {
             // OrderDTO -> OrderVO
-            OrdersVO orderVO = OrdersVO.builder()
+                OrdersVO orderVO = OrdersVO.builder()
                     .id(order.getId())
                     .userId(order.getUserId())
                     .orderList(order.getOrderList())

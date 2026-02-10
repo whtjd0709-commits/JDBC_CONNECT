@@ -61,7 +61,7 @@ public class UsermanageImpl implements Usermanage {
     }
 
     @Override
-    public Boolean userDelete(UserDTO userDTO) {
+    public boolean userDelete(UserDTO userDTO) {
         // UserDTO -> UserVO
         UserVO userVO = UserVO.builder().id(userDTO.getId())
                 .userId(userDTO.getUserId())
@@ -82,7 +82,7 @@ public class UsermanageImpl implements Usermanage {
     }
 
     @Override
-    public Boolean userModify(UserDTO userDTO) {
+    public boolean userModify(UserDTO userDTO) {
         UserVO userVO = UserVO.builder().id(userDTO.getId()) 
                 .userId(userDTO.getUserId())
                 .userPw(userDTO.getUserPw())
@@ -118,6 +118,13 @@ public class UsermanageImpl implements Usermanage {
         else
             return false;
 
+    }
+
+    @Override
+    public UserDTO login(String userId, String userPw) {
+        UserDTO userDTO = UserDTO.toUserDTO(
+                userRepository.login(userId, userPw).get());
+        return userDTO;
     }
 
 }

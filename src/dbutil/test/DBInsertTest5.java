@@ -5,7 +5,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 
 import domain.PersonRe;
-import domain.PersonVO;
+ 
 
 public class DBInsertTest5 {
     public static void main(String[] args) {

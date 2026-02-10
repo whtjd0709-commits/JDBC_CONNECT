@@ -6,10 +6,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
-import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
+import dbutil.test.DBUtil;
 import domain.users.UserVO;
 
 public class UsersDAOImpl implements Users {
@@ -142,6 +143,38 @@ public class UsersDAOImpl implements Users {
     }
 
     @Override
+    public int userMod(UserVO userVO) {
+        int result = 0;
+        try (Connection conn = DriverManager.getConnection(url, dbuser, password)) {
+
+            String sql = "update person set userId=?, userPw=?, userName=?," +
+                    "userEmail=?, phone1=?, phone2=?, age=?, address1=?, address2=?" +
+                    ", modifyDate=? where id = ?";
+
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, userVO.getUserId());
+            pstmt.setString(2, userVO.getUserPw());
+            pstmt.setString(3, userVO.getUserName());
+            pstmt.setString(4, userVO.getUserEmail());
+            pstmt.setString(5, userVO.getPhone1());
+            pstmt.setString(6, userVO.getPhone2());
+            pstmt.setByte(7, userVO.getAge());
+            pstmt.setString(8, userVO.getAddress1());
+            pstmt.setString(9, userVO.getAddress2());
+            pstmt.setTimestamp(10, new Timestamp(System.currentTimeMillis()));
+            pstmt.setLong(11, userVO.getId());
+
+            result = pstmt.executeUpdate();
+
+        } catch (SQLException e) {
+            System.out.println("DB 동작 에러!!");
+            System.out.println(e.getMessage());
+        }
+
+        return result;
+    }
+
+    @Override
     public List<UserVO> userSearch(String userId, String userName) {
         // sql select , where userId, userName
         List<UserVO> list = new ArrayList<>();
@@ -181,9 +214,9 @@ public class UsersDAOImpl implements Users {
     }
 
     @Override
-    public List<UserVO> userSearch(String userEmail) {
+    public java.util.Optional<UserVO> userSearch(String userEmail) {
         // sql select, where email
-        List<UserVO> list = new ArrayList<>();
+        java.util.Optional<UserVO> opt = java.util.Optional.empty();
 
         try (Connection conn = DriverManager.getConnection(url, dbuser, password)) {
 
@@ -193,8 +226,48 @@ public class UsersDAOImpl implements Users {
             pstmt.setString(1, userEmail);
             ResultSet rs = pstmt.executeQuery();
 
+            if (rs.next()) {
+                UserVO vo = UserVO.builder()
+                        .id(rs.getLong("id"))
+                        .userId(rs.getString("userId"))
+                        .userPw(rs.getString("userPw"))
+                        .userName(rs.getString("userName"))
+                        .userEmail(rs.getString("userEmail"))
+                        .phone1(rs.getString("phone1"))
+                        .phone2(rs.getString("phone2"))
+                        .age(rs.getByte("age"))
+                        .address1(rs.getString("address1"))
+                        .address2(rs.getString("address2"))
+                        .regDate(rs.getTimestamp("regDate"))
+                        .modifyDate(rs.getTimestamp("modifyDate"))
+                        .build();
+                opt = java.util.Optional.of(vo);
+            }
+
+        } catch (SQLException e) {
+            System.out.println("DB 작업 실패!!");
+            System.out.println(e.getMessage());
+        }
+
+        return opt;
+    }
+
+        @Override
+    public Optional<UserVO> login(String userId, String userPw) {
+        // sql select , where userId, userName
+        Optional<UserVO> user = null;
+
+        try (Connection conn = DBUtil.getConnection()) {
+
+            // SQL
+            String sql = "select * from person where userId=? and userPw=?";
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, userId);
+            pstmt.setString(2, userPw);
+            ResultSet rs = pstmt.executeQuery();
+
             while (rs.next()) {
-                list.add(UserVO.builder()
+                user =Optional.of(UserVO.builder()
                         .id(rs.getLong("id"))
                         .userId(rs.getString("userId"))
                         .userPw(rs.getString("userPw"))
@@ -215,7 +288,7 @@ public class UsersDAOImpl implements Users {
             System.out.println(e.getMessage());
         }
 
-        return list;
+        return user;
     }
 
 }

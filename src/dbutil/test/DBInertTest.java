@@ -6,7 +6,7 @@ import java.sql.Statement;
 
 public class DBInertTest {
     public static void main(String[] args) {
-        Connection comm = null;
+        
         //1. Connection 연결 객체 생성 (DriverManager.getConection())
         //2. SQL 작성
         //3. Connection 객체에서 Statement 객체를 생성.

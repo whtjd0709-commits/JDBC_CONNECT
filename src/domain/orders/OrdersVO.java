@@ -9,21 +9,27 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-    @Setter
-    @Getter
-    @ToString
-    @NoArgsConstructor
-    @AllArgsConstructor
-    @Builder
-
+@Setter
+@Getter
+@ToString
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class OrdersVO {
-    
+
     private long id;
     private String orderList;
-    private int ordernum;
+    private int orderNum;
     private int price;
     private Timestamp date;
     private String userId;
 
+    public int getOrderNum() {
+        return this.orderNum;
+    }
+
+    public void setOrderNum(int orderNum) {
+        this.orderNum = orderNum;
+    }
 
 }

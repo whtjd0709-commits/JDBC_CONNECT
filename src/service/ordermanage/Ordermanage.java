@@ -19,8 +19,7 @@ public interface Ordermanage {
 
     // --4) 주문 정보 확인
     // 회원 주문 정보 확인(자신의 userId를 활용해서 주문 확인)
-    List<OrderDTO> findList(OrderDTO dto, UserDTO userDTO);
-
+    List<OrderDTO> findList(UserDTO dto);
     // 관리자 주문 정보 확인(모든 주문 목록을 확인, 특정 userId, 날짜...)
     List<OrderDTO> findAll();
 

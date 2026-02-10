@@ -44,7 +44,7 @@ public class OrdersDAOImpl implements Orders {
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
             pstmt.setString(1, order.getOrderList());
-            pstmt.setInt(2, order.getOrdernum());
+            pstmt.setInt(2, order.getOrderNum());
             pstmt.setInt(3, order.getPrice());
             pstmt.setString(4, order.getUserId());
 
@@ -69,7 +69,7 @@ public class OrdersDAOImpl implements Orders {
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
             pstmt.setString(1, order.getOrderList());
-            pstmt.setInt(2, order.getOrdernum());
+            pstmt.setInt(2, order.getOrderNum());
             pstmt.setInt(3, order.getPrice());
             pstmt.setTimestamp(4, new Timestamp(System.currentTimeMillis()));
             pstmt.setLong(5, order.getId());
@@ -100,7 +100,7 @@ public class OrdersDAOImpl implements Orders {
                     OrdersVO.builder()
                         .id(rs.getLong("id"))
                         .orderList(rs.getString("orderList"))
-                        .ordernum(rs.getInt("orderNum"))
+                        .orderNum(rs.getInt("orderNum"))
                         .price(rs.getInt("price"))
                         .date(rs.getTimestamp("date"))
                         .userId(rs.getString("userId"))
@@ -132,7 +132,7 @@ public class OrdersDAOImpl implements Orders {
                     OrdersVO.builder()
                         .id(rs.getLong("id"))
                         .orderList(rs.getString("orderList"))
-                        .ordernum(rs.getInt("orderNum"))
+                        .orderNum(rs.getInt("orderNum"))
                         .price(rs.getInt("price"))
                         .date(rs.getTimestamp("date"))
                         .userId(rs.getString("userId"))
@@ -164,7 +164,7 @@ public class OrdersDAOImpl implements Orders {
                     OrdersVO.builder()
                         .id(rs.getLong("id"))
                         .orderList(rs.getString("orderList"))
-                        .ordernum(rs.getInt("orderNum"))
+                        .orderNum(rs.getInt("orderNum"))
                         .price(rs.getInt("price"))
                         .date(rs.getTimestamp("date"))
                         .userId(rs.getString("userId"))
@@ -196,7 +196,7 @@ public class OrdersDAOImpl implements Orders {
                     OrdersVO.builder()
                         .id(rs.getLong("id"))
                         .orderList(rs.getString("orderList"))
-                        .ordernum(rs.getInt("orderNum"))
+                        .orderNum(rs.getInt("orderNum"))
                         .price(rs.getInt("price"))
                         .date(rs.getTimestamp("date"))
                         .userId(rs.getString("userId"))

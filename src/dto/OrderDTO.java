@@ -9,13 +9,21 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+public class OrderDTO {
 
-public class OrderDTO {    
-    
     private long id;
     private String orderList;
-    private int ordernum;
+    private int orderNum;
     private int price;
-    private String date; //Timestamp -> String 으로 바꿈.
+    private String date; // Timestamp -> String
     private String userId;
+
+    public int getOrderNum() {
+        return this.orderNum;
+    }
+
+    public void setOrderNum(int orderNum) {
+        this.orderNum = orderNum;
+    }
+
 }

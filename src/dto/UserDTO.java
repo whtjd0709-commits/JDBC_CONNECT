@@ -40,7 +40,7 @@ public class UserDTO {
                 .id(userDTO.id)
                 .userId(userDTO.userId)
                 .userPw(userDTO.userPw)
-                .userPw(userDTO.userPw)
+                .userName(userDTO.userName)
                 .userEmail(userDTO.userEmail)
                 .phone1(userDTO.phone1)
                 .phone2(userDTO.phone2)
@@ -57,7 +57,7 @@ public class UserDTO {
                 .id(userVO.getId())
                 .userId(userVO.getUserId())
                 .userPw(userVO.getUserPw())
-                .userPw(userVO.getUserPw())
+                .userName(userVO.getUserName())
                 .userEmail(userVO.getUserEmail())
                 .phone1(userVO.getPhone1())
                 .phone2(userVO.getPhone2())
@@ -77,6 +77,9 @@ public class UserDTO {
     }
 
     private static Timestamp toDateTimestamp(String dataString) {
+        if (dataString == null)
+            return new Timestamp(0); //1910-01-01 00:00:00
+
         String[] arrDayTime = dataString.split(" ");
         String[] day = arrDayTime[0].split("-");
         String[] time = arrDayTime[1].split(":");
