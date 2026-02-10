@@ -23,7 +23,7 @@ public class PersonVO {
     public PersonVO() {
     }
 
-    // 빌드 생성자
+    // 필드 생성자
     public PersonVO(String userId, String userPw, String userName, String userEmail, String phone1, String phone2,
             byte age, String address1, String address2) {
         this.userId = userId;

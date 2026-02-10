@@ -1,0 +1,123 @@
+package service.usermanage;
+
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
+
+import domain.users.UserVO;
+import dto.UserDTO;
+import repository.Users;
+import repository.UsersDAOImpl;
+
+public class UsermanageImpl implements Usermanage {
+
+    // DB 작업을 할 수 있는 객체를 호출 작업 진행...
+    // 인터페이스를 통한 객체 호출...
+    Users userRepository = new UsersDAOImpl();
+
+    @Override
+    public List<UserDTO> searchAll() {
+        List<UserDTO> userDTOList = new ArrayList<>();
+        List<UserVO> userVOList = userRepository.userAll();
+        for (UserVO vo : userVOList) {
+            SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            UserDTO dto = UserDTO.builder()
+                    .id(vo.getId())
+                    .userId(vo.getUserId())
+                    .userPw(vo.getUserPw())
+                    .userName(vo.getUserName())
+                    .userEmail(vo.getUserEmail())
+                    .phone1(vo.getPhone1())
+                    .phone2(vo.getPhone2())
+                    .age(vo.getAge())
+                    .address1(vo.getAddress1())
+                    .address2(vo.getAddress2())
+                    .regDate(sf.format(vo.getRegDate()))
+                    .modifyDate(sf.format(vo.getModifyDate()))
+                    .build();
+            userDTOList.add(dto);
+        }
+        return userDTOList;
+    }
+
+    @Override
+    public UserDTO searchOne(String userEmail) {
+        UserVO vo = userRepository.userSearch(userEmail).get();
+        SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        UserDTO dto = UserDTO.builder().id(vo.getId())
+                .userId(vo.getUserId())
+                .userPw(vo.getUserPw())
+                .userName(vo.getUserName())
+                .userEmail(vo.getUserEmail())
+                .phone1(vo.getPhone1())
+                .phone2(vo.getPhone2())
+                .age(vo.getAge())
+                .address1(vo.getAddress1())
+                .address2(vo.getAddress2())
+                .regDate(sf.format(vo.getRegDate()))
+                .modifyDate(sf.format(vo.getModifyDate()))
+                .build();
+        return dto;
+    }
+
+    @Override
+    public Boolean userDelete(UserDTO userDTO) {
+        // UserDTO -> UserVO
+        UserVO userVO = UserVO.builder().id(userDTO.getId())
+                .userId(userDTO.getUserId())
+                .userPw(userDTO.getUserPw())
+                .userName(userDTO.getUserName())
+                .userEmail(userDTO.getUserEmail())
+                .phone1(userDTO.getPhone1())
+                .phone2(userDTO.getPhone2())
+                .age((byte) (userDTO.getAge())) // byte로 캐스팅 문제 확인.
+                .address1(userDTO.getAddress1())
+                .address2(userDTO.getAddress2())
+                .build();
+
+        if (userRepository.userDel(userVO) != 0)
+            return true;
+        else
+            return false;
+    }
+
+    @Override
+    public Boolean userModify(UserDTO userDTO) {
+        UserVO userVO = UserVO.builder().id(userDTO.getId()) 
+                .userId(userDTO.getUserId())
+                .userPw(userDTO.getUserPw())
+                .userName(userDTO.getUserName())
+                .userEmail(userDTO.getUserEmail())
+                .phone1(userDTO.getPhone1())
+                .phone2(userDTO.getPhone2())
+                .age((byte) (userDTO.getAge())) // byte로 캐스팅 문제 확인.
+                .address1(userDTO.getAddress1())
+                .address2(userDTO.getAddress2())
+                .build();
+        if (userRepository.userMod(userVO) != 0)
+            return true;
+        else
+            return false;
+    }
+
+    @Override
+    public boolean userRegister(UserDTO userDTO) {
+        UserVO userVO = UserVO.builder()
+                .userId(userDTO.getUserId())
+                .userPw(userDTO.getUserPw())
+                .userName(userDTO.getUserName())
+                .userEmail(userDTO.getUserEmail())
+                .phone1(userDTO.getPhone1())
+                .phone2(userDTO.getPhone2())
+                .age((byte) (userDTO.getAge())) // byte로 캐스팅 문제 확인.
+                .address1(userDTO.getAddress1())
+                .address2(userDTO.getAddress2())
+                .build();
+        if (userRepository.userAdd(userVO) != 0)
+            return true;
+        else
+            return false;
+
+    }
+
+}
